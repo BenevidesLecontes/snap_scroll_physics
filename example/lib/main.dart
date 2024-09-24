@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:snap_scroll_physics/snap_scroll_physics.dart';
-import 'examples/material.dart';
+
 import 'examples/cupertino.dart';
+import 'examples/material.dart';
 import 'examples/music.dart';
 
 void main() {
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({super.key, required this.title});
 
   final String title;
 
@@ -36,14 +35,13 @@ class _MyHomePageState extends State<MyHomePage> {
   int index = 0;
   @override
   Widget build(BuildContext context) {
-    bool showBottomBar = true;
     return Scaffold(
       body: [
         () => MaterialExamplePage(),
         () => CupertinoExamplePage(),
         () => MusicExamplePage(),
       ][index](),
-      bottomNavigationBar: showBottomBar ? BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
         onTap: (index) => setState(() => this.index = index),
         items: [
@@ -60,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.music_note),
           )
         ],
-      ) : null,
+      ),
     );
   }
 }

@@ -40,15 +40,17 @@ class _SnapPoint implements Snap {
     double? toleranceDistance,
     double? trailingToleranceDistance,
     double? leadingToleranceDistance,
-  })  : this.leadingExtent =
+  })  : leadingExtent =
             extent - (leadingToleranceDistance ?? toleranceDistance ?? 0),
-        this.trailingExtent =
+        trailingExtent =
             extent + (trailingToleranceDistance ?? toleranceDistance ?? 0);
 
+  @override
   bool shouldApplyFor(ScrollMetrics position, double proposedEnd) {
     return proposedEnd > leadingExtent && proposedEnd < trailingExtent;
   }
 
+  @override
   double targetPixelsFor(
     ScrollMetrics position,
     double proposedEnd,
@@ -66,25 +68,25 @@ class _PreventSnapArea implements Snap {
 
   _PreventSnapArea(this.minExtent, this.maxExtent, {double? delimiter})
       : assert(
-            delimiter == null ||
-                (delimiter >= minExtent) && (delimiter <= maxExtent),
-            'The delimiter value should be between the minExtent and maxExtent'),
-        this.delimiter = delimiter ?? (minExtent + (maxExtent - minExtent) / 2);
+          delimiter == null ||
+              (delimiter >= minExtent) && (delimiter <= maxExtent),
+          'The delimiter value should be between the minExtent and maxExtent',
+        ),
+        delimiter = delimiter ?? (minExtent + (maxExtent - minExtent) / 2);
 
+  @override
   bool shouldApplyFor(ScrollMetrics position, double proposedEnd) {
     return proposedEnd > minExtent && proposedEnd < maxExtent;
   }
 
+  @override
   double targetPixelsFor(
     ScrollMetrics position,
     double proposedEnd,
     Tolerance tolerance,
     double velocity,
   ) {
-    if (delimiter < proposedEnd) {
-      return maxExtent;
-    } else {
-      return minExtent;
-    }
+    if (delimiter < proposedEnd) return maxExtent;
+    return minExtent;
   }
 }

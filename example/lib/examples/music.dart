@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:snap_scroll_physics/snap_scroll_physics.dart';
 
 final kMusicImageUrl =
@@ -11,7 +9,6 @@ final kMusicCoverImageUrl =
     'https://images.unsplash.com/photo-1502773860571-211a597d6e4b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80';
 
 class MusicExamplePage extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     final expandedHeight = 600.0;
@@ -41,6 +38,7 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double height;
 
   CustomHeaderDelegate(this.height);
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -193,10 +191,12 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
               backgroundColor: color,
               title: AnimatedDefaultTextStyle(
                   child: Text('Luigi Comba'),
-                  style:
-                      TextStyle(color: titleColor.withOpacity(showBar ? 1 : 0)),
+                  style: TextStyle(
+                      color: titleColor?.withOpacity(showBar ? 1 : 0)),
                   duration: Duration(milliseconds: 400)),
-              brightness: showBar ? Brightness.dark : Brightness.light,
+              systemOverlayStyle: showBar
+                  ? SystemUiOverlayStyle.dark
+                  : SystemUiOverlayStyle.light,
             ),
           ),
         )
